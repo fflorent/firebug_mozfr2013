@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="fr">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Introduction à Firebug</title>
+
+        <meta name="description" content="Introduction à Firebug">
+        <meta name="author" content="Florent FAYOLLE">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <!--<link rel="stylesheet" href="css/theme/default.css" id="theme">-->
+        <link rel="stylesheet" href="css/screen.css" id="theme">
+        <link rel="stylesheet" href="css/presentation.css">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <style id="style">
+        .demo {
+            font-weight: bold;
+        }
+        .new::before {
+            color:salmon;
+            content: "(Nouveau) "
+        }
+        .reveal h1, 
+        .reveal h2, 
+        .reveal h3, 
+        .reveal h4, 
+        .reveal h5, 
+            .reveal h6 {
+            -moz-hyphens: none;
+        }
+
+        input[type='button'] {
+            font-size: 0.8em;
+        }
+      
+        #styleTraceParagraph {
+            color: blue;
+        }
+        .styleTrace {
+            color: red;
+        }
+        .styleTrace > p {
+            color: green;
+        }
+        #inspectable {
+            background-image: linear-gradient(-45deg, #788CFF, #B4C8FF);
+            font-family: TitilliumMaps,Arial,Courier New;
+            font-size: 1em;
+            height: 200px;
+            line-height: 200px;
+            text-align: center;
+            vertical-align: middle;
+            width: 200px;
+        }
+        </style>
+
+        <script type="text/x-template" id="catastrophe">
+            <style>
+                .reveal {
+                    font-family: arial;
+                }
+                .reveal h1,
+                .reveal h2
+                {
+                    font-size: 0.2em;
+                }
+                .reveal p
+                {
+                    font-size: 2em;
+                    font-style: oblique;
+                    position: absolute;
+                }
+                .reveal a
+                {
+                    margin-left: -20px;
+                }
+
+            </style>
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+        <script type="text/javascript" src="js/highlight.pack.js"></script>
+        <script type="text/javascript" src="js/presentation.js"></script>
+        <script type="text/javascript" src="js/function.js"></script>
+    </head>
+
+    <body>
+        <header>
+            <div id="logo">
+                <img alt="" src="img/firebugLogo.png" id="icon">
+                <p id="name">Firebug</p>
+                <p id="slogan">Web Development Evolved.</p>
+            </div>
+        </header>
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+
+                <section>
+                    <h1 style="-moz-hyphens:none;">Introduction à Firebug</h1>
+                    <h3>Quelques notions qui vous feront gagner du temps</h3>
+                    <p>
+                        <small>Par Florent FAYOLLE / <a href="http://twitter.com/floff01">@floff01</a></small>
+                    </p>
+                </section>
+
+                <!--<section>
+                    <h1>Qui est votre serviteur?</h1>
+                    <p class="fragment">
+                        Un jeune diplômé.
+                    </p>
+                    <p class="fragment">
+                        Développeur JS à ses temps libres.
+                    </p>
+                    <p class="fragment">
+                        Contributeur Firebug depuis un peu moins d'un an.
+                    </p>
+                </section>
+
+                <section>
+                    <h1>Qui n'est pas votre serviteur&nbsp;?...</h1>
+                    <p class="fragment">
+                        Une grosse brute de codeur qui masteurise et qui sait tout sur tout.
+                    </p>
+                    <p class="fragment"> 
+                        Un bilingue.
+                    </p>
+                    <p class="fragment">
+                        Un type qui connaît tout de Firebug......
+                    </p>
+                </section>-->
+        
+                <section>
+                    <section>
+                        <h1>Firebug&nbsp;? Kesako&nbsp;?</h1>
+                        <ul>
+                          <li>Un outil de développement web comprenant:
+                            <ul>
+                              <li>Une console Javascript.</li>
+                              <li>Un visualiseur/modifieur de contenu HTML.</li>
+                              <li>Un visualiseur/modifieur de contenu CSS.</li>
+                              <li>Un débogueur JS.</li>
+                              <li>Un visualiseur de traffic réseau.</li>
+                              <li>Un visualiseur/modifieur de cookies.</li>
+                            </ul>
+                          </li>
+                          <li class="fragment">Firebug en anglais est la <em>punaise des bois</em>, plus connue sous le nom de <em>Gendarme</em></li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h1>Qui développe Firebug&nbsp;?</h1>
+                        <p>Auteur: Joe Hewitt</p>
+                        <p>Développeurs actifs:</p>
+                        <ul>
+                          <li>Jan "Honza" Odvarko (Mozilla; République Tchèque)</li>
+                          <li>Sebastian Zartner (Allemagne)</li>
+                          <li>Simon Lindholm (Suède)</li>
+                          <li>Florent Fayolle (France)</li>
+                          <li>Farshid Beheshti (Iran)</li>
+                          <li>Steven Roussey (USA)</li>
+                        </ul>
+                        <p><br/>Autre contributeurs: <a href="code.google.com/p/fbug/people/list">code.google.com/p/fbug/people/list</a></p>
+                    </section>
+                    <section>
+                        <h1>Statut actuel</h1>
+                        <p>Version stable: <a href="#newFeatures">1.11.4</a></p>
+                        <p>Version alpha: 1.12a8</p>
+                        <p>Notes de versions: <a href="https://getfirebug.com/releasenotes">https://getfirebug.com/releasenotes</a></p>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>Il faut s'attendre à quoi durant cette présentation&nbsp;?</h1>
+                    </section>
+                    <section>
+                        <h3>À des calembours stupides.</h3>
+                        <img src="img/facepalm.jpg" alt="Facepalm">
+                    </section>
+                    <section>
+                        <h3>À de l'improvisation foireuse</h3>
+                        <img src="img/impro.jpg" alt="Improvisation">
+                    </section>
+                    <section>
+                        <h3>Bref, désolé par avance...</h3>
+                    </section>
+                </section>
+
+                <section>
+                    <h1>L'onglet HTML</h1>
+                    <p>Firebug et son célèbre inspecteur ...</p>
+                    <img src="img/derrick.jpg" style="width: 60%" alt="Derrick">
+                    <p>... d'éléments HTML.</p>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>L'onglet HTML</h1>
+                        <p><img src="img/htmlpanel.png" alt="Le panneau HTML"></p>
+                        <!-- correction : class="notes"-->
+                        <aside class="note">
+              <h3>Choses à ne pas montrer au public...</h3>
+              <ul>
+                <li>Arborescence</li>
+                <li>Inspecteur HTML</li>
+                <!--<li>Surbrillance d'éléments modifiés</li>-->
+                <li>Edition de contenu HTML à la volée</li>
+                <li>Copie de contenu HTML</li>
+                <li>Collage</li>
+                <li>Style =&gt; revenir plus tard</li>
+              </ul>
+            </aside>
+          </section>
+          <section>
+            <h1>L'onglet HTML</h1>
+            <ul>
+              <li>Arborescence des éléments</li>
+              <li>Inspecteur d'éléments HTML</li>
+              <li>Manipulation du contenu</li>
+            </ul>
+            <br/>
+            <p>
+              <button onclick="changeText()">Modifier le text</button><br/>
+              <span id="textToChange">Ce texte va disparaître</span>
+            </p>
+          </section>
+          
+          <section>
+            <h1>Inspection et modification des styles CSS</h1>
+            <ul>
+              <li>Aperçu des couleurs, des images, et des polices</li>
+              <li>Manipulation des valeurs</li>
+            </ul>
+            <div class="test" id="inspectable">Text</div>
+          </section>
+          
+                </section>
+
+                <section>
+                    <h1>L'onglet CSS</h1>
+                    <p>Pour coder avec Classe!</p>
+                </section>
+
+                <section>
+                    <h1>L'onglet CSS</h1>
+                    <p class="fragment">De modifier des règles à la volée</p>
+                    <p class="fragment">De voir l'ensemble des règles de votre page</p>
+                    <p class="fragment new">Tester des sélecteurs CSS !</p>
+                    <p class="fragment"><a href="javascript: void(0);" onclick="CSS_catastrophe();">Déclencher la catastrophe!</a></p>
+                    </ul>
+                </section>
+                
+                <section>
+                    <h1>L'onglet script</h1>
+                    <p>Visualiser les scripts et de les exécuter pas à pas (avec des points d'arrêts).</p>
+                    <p class="fragment">Visualiser des variables (<em>espions</em>) à chaque étapes et de les éditer.</p>
+                    <p class="fragment">Voir la pile d'appels vers la ligne en cours d'exécution</p>
+                    <p class="fragment new">Voir la liste des variables dans la portée (<em>scope</em>) de la fonction (aka Fermetures / <em>Closures</em>)</p>
+                    <p class="fragment">Démonstration: <input type="button" id="demo_bp_script" value="Déclencher le point d'arrêt"/></p>
+                </section>
+
+                <section>
+                    <h1>L'onglet DOM</h1>
+                    <p class="fragment">Visualiser les propriétés et <em>sous-propriétés</em> d'un objet</p>
+                    <p class="fragment">Modifier les valeurs</p>
+                    <p class="fragment">Placer des points d'arrêt sur des propriétés</p>
+                    <p class="fragment">Demonstration: <input type="button" id="demo_bp_dom" value="Déclencher le point d'arrêt"></p>
+                </section>
+
+                <section>
+                    <h1>L'onglet Console</h1>
+                    <p>Pour tracer...</p>
+                    <img src="img/tracteur.jpg" alt="tracteur" style="height: 420px;">
+                    <p>... des logs</p>
+                    <p style="font-style: italic; font-size: small; text-align: right;">&copy; Philippe Rondas, Creative Commons BY NC</p>
+                </section>
+
+                <section>
+                    <h1>L'onglet Console</h1>
+                    <p class="fragment">Utile pour logguer des informations avec l'API console</p>
+                    <p class="fragment">Utile pour exécuter des expressions JS</p>
+                    <p class="fragment">Dispose également de fonctions/propriétés personnalisées ($0, $(), help, etc.)</p>
+                    <p class="fragment">Possibilité de profiler l'exécution de scripts</p>
+                </section>
+
+                <section>
+                    <h1>L'onglet Cookies</h1>
+                    <img src="img/dark_side_cookies.jpg" alt="dark side of the cookies" />
+                </section>
+
+                <section>
+                    <h1>document.cookie&nbsp;?... ;(</h1>
+                    <img src="img/cookies_avant.png" alt="cookies avant"/>
+                </section>
+
+                <section>
+                    <h1>L'onglet Cookies</h1>
+                    <img src="img/onglet_cookies.png" alt="onglet cookies" />
+                </section>
+
+                <section>
+                    <h1>L'onglet Cookies</h1>
+                    <p class="fragment">Visualiser les cookies</p>
+                    <p class="fragment">Créer/modifier/supprimer un cookie avec une interface conviviale</p>
+                    <p class="fragment">Placer un point d'arrêt sur un cookie</p>
+                </section>
+
+                <section>
+                    <h1>Comment postuler pour contribuer&nbsp;?</h1>
+                    <img src="img/hyppolite.png" style="height:580px;" alt="Vous voulez postuler&nbsp;?">
+                </section>
+
+                <section>
+                    <h1>Comment postuler pour contribuer&nbsp;?</h1>
+                    <p class="fragment">Envoyez votre CV!</p>
+                    <p class="fragment">N'oubliez pas vos références (votre patron, vos profs, votre maman, ...)</p>
+                    <p class="fragment">Si on vous retient, on vous fera passer des tests de motivation</p>
+                    <p class="fragment">Des tests techniques</p>
+                    <p class="fragment">Des tests de personnalité</p>
+                    <p class="fragment">...</p>
+                    <p class="fragment" style="color: red; font-size: 1.5em; font-weight: 900px;">Bref, préparez-vous au pire&nbsp;!</p>
+                </section>
+
+                <section>
+                    <h1>Comment contribuer&nbsp;?</h1>
+                    <h3>Pour de vrai</h3>
+                    <p>En un mot&nbsp;?<span style="color: red; font-weight: 900; font-style: italic; font-size: 1.3em; "> Faites&nbsp;!</span></p>
+                    <ul>
+                        <li class="fragment">Proposez / Reportez</li>
+                        <li class="fragment">Codez</li>
+                        <li class="fragment">Participez aux tests de la beta</li>
+                        <li class="fragment">Rédigez des articles</li>
+                        <li class="fragment">Documentez</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h1>Des sites, de la doc!</h1>
+                    <p>Site officiel: <a href="https://www.getfirebug.com" target="_blank">https://www.getfirebug.com</a></p>
+                    <p>Wiki officiel: <a href="https://www.getfirebug.com/wiki/" target="_blank">https://www.getfirebug.com/wiki/</a></p>
+                    <p>Github: <a href="https://github.com/firebug/firebug/" target="_blank">https://github.com/firebug/firebug/</a></p>
+                    <p>Google Code: <a href="https://code.google.com/p/fbug/issues/list" target="_blank">https://code.google.com/p/fbug/issues/list</a></p>
+                    <p>Software is hard: <a href="http://www.softwareishard.com/blog/" target="_blank">http://www.softwareishard.com/blog/</a></p>
+                    <p>Mozilla Hacks: <a href="https://hacks.mozilla.org/category/firebug/" target="_blank">https://hacks.mozilla.org/category/firebug/</a></p>
+                    <p>(A compléter) DevTools Secrets: <a href="http://devtoolsecrets.com" target="_blank">http://devtoolsecrets.com</a></p>
+                </section>
+
+                <section>
+                    <h1>Merci de votre attention!</h1>
+                    <p>Des questions&nbsp;? Des remarques&nbsp;? Des trolls&nbsp;?</p>
+                </section>
+            </div>
+
+        </div>
+
+        <footer id="footer">Florent FAYOLLE, fayolle[tiret]florent à orange.fr</footer>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+    <script>
+        var footer = document.getElementById("footer");
+        footer.innerHTML = footer.innerHTML.replace("[tiret]", "-").replace(" à ", "@");
+    </script>
+        <!--<script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+            (function()
+            {
+                var closure_var = 0;
+                function traitementQuelconque(target)
+                {
+                    target.skin.backgroundColor = "red";
+                    closure_var++;
+                }
+                document.getElementById("demo_bp_script").onclick = function(ev)
+                {
+                    traitementQuelconque(ev.target);
+                }
+            })();
+
+            // Nombre de fois où j'ai cliqué sur le bouton (demo DOM)
+            window.nb_clics_dom = 0;
+            document.getElementById("demo_bp_dom").onclick = function(ev)
+            {
+                window.nb_clics_dom++;
+                alert("le bouton a été cliqué "+window.nb_clics_dom+" fois");
+            };
+
+            var styleBeforeCata;
+            function CSS_catastrophe()
+            {
+                var template = document.getElementById("catastrophe");
+                var range = document.createRange();
+                var styleCata = range.createContextualFragment(template.textContent).querySelector("style");
+                var styleBeforeCata = document.getElementById("style");
+                styleBeforeCata.parentNode.replaceChild(styleCata, styleBeforeCata);
+            }
+        </script>-->
+
+
+    </body>
+</html>
